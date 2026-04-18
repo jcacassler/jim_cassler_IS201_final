@@ -26,7 +26,7 @@
         
         <div class="body">
             <h2>Play Snake!</h2>
-            <canvas id="gameCanvas" width="400" height="400" style="border: 2px solid white; display: block; margin: 0 auto;"></canvas>
+            <canvas id="gameCanvas" width="400" height="400" tabindex="0" style="border: 2px solid white; display: block; margin: 0 auto; outline: none;"></canvas>
             <p style="text-align: center;">Score: <span id="score">0</span></p>
             <p style="text-align: center;">Use arrow keys or WASD to move the snake. Press Space to restart.</p>
         </div>
@@ -130,6 +130,11 @@
             const SPACE_KEY = 32;
 
             const keyPressed = event.keyCode;
+
+            // Prevent arrow keys and space from scrolling the page
+            if ([LEFT_KEY, RIGHT_KEY, UP_KEY, DOWN_KEY, SPACE_KEY].includes(keyPressed)) {
+                event.preventDefault();
+            }
             const goingUp = dy === -1;
             const goingDown = dy === 1;
             const goingRight = dx === 1;
@@ -182,9 +187,6 @@
                 directionChanged = true;
             }
 
-            if (directionChanged) {
-                event.preventDefault();
-            }
         }
 
         function resetGame() {
@@ -201,6 +203,7 @@
 
         // Initialize
         generateFood();
+        canvas.focus();
         setInterval(gameLoop, 100);
     </script>
 </body>
